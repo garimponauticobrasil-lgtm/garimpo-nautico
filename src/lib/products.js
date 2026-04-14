@@ -14,24 +14,24 @@ export const categories = [
 
 const galleries = {
   motor: [
-    "./src/assets/products/outboard-yamaha.jpg",
-    "./src/assets/products/outboard-illustration.png",
-    "./src/assets/products/steering-wheel.jpg",
+    "/src/assets/products/outboard-yamaha.jpg",
+    "/src/assets/products/outboard-illustration.png",
+    "/src/assets/products/steering-wheel.jpg",
   ],
   helice: [
-    "./src/assets/products/propeller.jpg",
-    "./src/assets/products/steering-wheel.jpg",
-    "./src/assets/products/outboard-yamaha.jpg",
+    "/src/assets/products/propeller.jpg",
+    "/src/assets/products/steering-wheel.jpg",
+    "/src/assets/products/outboard-yamaha.jpg",
   ],
   painel: [
-    "./src/assets/products/steering-wheel.jpg",
-    "./src/assets/products/outboard-yamaha.jpg",
-    "./src/assets/products/bilge-pump.png",
+    "/src/assets/products/steering-wheel.jpg",
+    "/src/assets/products/outboard-yamaha.jpg",
+    "/src/assets/products/bilge-pump.png",
   ],
   bomba: [
-    "./src/assets/products/bilge-pump.png",
-    "./src/assets/products/propeller.jpg",
-    "./src/assets/products/outboard-illustration.png",
+    "/src/assets/products/bilge-pump.png",
+    "/src/assets/products/propeller.jpg",
+    "/src/assets/products/outboard-illustration.png",
   ],
 };
 

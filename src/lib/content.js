@@ -1,7 +1,7 @@
 export const content = {
   header: {
     brand: "Garimpo N\u00e1utico",
-    logo: "./src/assets/logo-garimpo-nautico-transparent.png",
+    logo: "/src/assets/logo-garimpo-nautico-transparent.png",
     links: [
       { label: "Produtos", href: "/produtos" },
       { label: "Atendimento", href: "/captacao" },
