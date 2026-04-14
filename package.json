@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "check:security": "node scripts/security-check.mjs",
+    "dev": "node server.mjs"
+  },
+  "devDependencies": {}
+}
