@@ -1,5 +1,7 @@
 {
   "cleanUrls": true,
+  "buildCommand": null,
+  "outputDirectory": ".",
   "rewrites": [
     {
       "source": "/produtos",
