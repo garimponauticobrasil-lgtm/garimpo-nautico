@@ -1,0 +1,13 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/produtos",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/captacao",
+      "destination": "/index.html"
+    }
+  ]
+}
