@@ -190,29 +190,44 @@
 
 @media (max-width: 680px) {
   .site-header {
-    align-items: flex-start;
-    flex-direction: column;
-    position: static;
+    align-items: center;
+    display: grid;
+    gap: 12px 10px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 0;
+    padding: 10px 14px 12px;
   }
 
   .brand img {
-    height: 54px;
+    height: 46px;
+    max-width: min(170px, 46vw);
   }
 
-  .header-actions,
+  .header-actions {
+    display: contents;
+  }
+
   .site-nav {
-    justify-content: flex-start;
+    grid-column: 1 / -1;
+    justify-content: stretch;
     width: 100%;
   }
 
   .site-nav a {
+    flex: 1 1 0;
+    font-size: 0.86rem;
+    padding: 9px 10px;
     text-align: center;
-    width: calc(50% - 5px);
+    width: auto;
   }
 
   .account-link {
+    font-size: 0.86rem;
+    justify-self: end;
+    padding: 10px 12px;
     text-align: center;
-    width: 100%;
+    white-space: nowrap;
+    width: auto;
   }
 
   .products-grid {
