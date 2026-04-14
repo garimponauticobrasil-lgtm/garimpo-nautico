@@ -23,6 +23,7 @@ const types = {
   ".json": "application/json; charset=utf-8",
   ".png": "image/png",
   ".svg": "image/svg+xml",
+  ".webmanifest": "application/manifest+json; charset=utf-8",
 };
 
 const securityHeaders = {
@@ -127,7 +128,8 @@ async function handleApi(request, response, pathname) {
 function isPublicPath(filePath) {
   const relativePath = filePath.slice(root.length).replaceAll("\\", "/");
 
-  return relativePath === "/index.html" || relativePath.startsWith("/src/");
+  return ["/index.html", "/manifest.webmanifest", "/service-worker.js"].includes(relativePath)
+    || relativePath.startsWith("/src/");
 }
 
 const server = createServer(async (request, response) => {
