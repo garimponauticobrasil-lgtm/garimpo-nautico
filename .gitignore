@@ -10,3 +10,7 @@ coverage/
 Thumbs.db
 
 .vercel
+mobile-*.png
+shop-*.png
+cart-*.png
+products-*.png

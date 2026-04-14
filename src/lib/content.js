@@ -4,12 +4,22 @@ export const content = {
     logo: "/src/assets/logo-garimpo-nautico-transparent.png",
     links: [
       { label: "Produtos", href: "/produtos" },
+      { label: "Carrinho", href: "/loja", icon: "cart" },
       { label: "Atendimento", href: "/captacao" },
     ],
     account: {
       label: "Falar com a equipe",
-      href: "/captacao",
+      href: "https://wa.me/5524992527966",
     },
+  },
+  shopPage: {
+    eyebrow: "Carrinho Garimpo N\u00e1utico",
+    title: "Revise as pe\u00e7as que voc\u00ea separou.",
+    text: "O carrinho mostra apenas os itens adicionados na p\u00e1gina de produtos. Finalize pelo WhatsApp para confirmar disponibilidade, frete e pr\u00f3ximo passo.",
+    cartTitle: "Carrinho",
+    emptyCart: "Seu carrinho ainda est\u00e1 vazio. Volte para produtos e adicione a pe\u00e7a desejada.",
+    checkoutTitle: "Finalizar pelo WhatsApp",
+    checkoutHint: "O pedido abre em uma conversa com a equipe para confirmar estoque, envio e pagamento.",
   },
   productsPage: {
     eyebrow: "Garimpo N\u00e1utico",

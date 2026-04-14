@@ -1,4 +1,4 @@
-const routes = new Set(["/", "/produtos", "/captacao"]);
+const routes = new Set(["/", "/produtos", "/captacao", "/loja"]);
 
 export function getRoute() {
   if (window.location.pathname === "/") {

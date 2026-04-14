@@ -1,4 +1,5 @@
 import { categories, formatPrice, products } from "../lib/products.js";
+import { addCartItem } from "../lib/cart.js";
 import { el } from "../lib/dom.js";
 import { navigate } from "../lib/router.js";
 
@@ -100,6 +101,16 @@ function openGallery(product) {
 }
 
 function createProductCard(product) {
+  const cartButton = el("button", {
+    className: "button button-small",
+    type: "button",
+    text: "Colocar no carrinho",
+    onClick: () => {
+      addCartItem(product.id);
+      cartButton.textContent = "Adicionado";
+    },
+  });
+
   return el("article", { className: "product-card" }, [
     el("button", {
       className: "product-photo",
@@ -131,15 +142,18 @@ function createProductCard(product) {
       ]),
       el("div", { className: "product-footer" }, [
         el("strong", { text: formatPrice(product.price) }),
-        el("a", {
-          className: "button button-small",
-          href: `/captacao?produto=${product.id}`,
-          text: "Consultar peça",
-          onClick: (event) => {
-            event.preventDefault();
-            navigate("/captacao");
-          },
-        }),
+        el("div", { className: "product-actions" }, [
+          cartButton,
+          el("a", {
+            className: "button button-small button-secondary",
+            href: `/captacao?produto=${product.id}`,
+            text: "Consultar",
+            onClick: (event) => {
+              event.preventDefault();
+              navigate("/captacao");
+            },
+          }),
+        ]),
       ]),
     ]),
   ]);
