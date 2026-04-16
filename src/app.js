@@ -34,11 +34,56 @@ function createPage(route) {
 }
 
 function createIntro() {
-  return document.createRange().createContextualFragment(`
-    <div class="brand-intro" aria-hidden="true">
+  const isMobileIntro = window.matchMedia("(max-width: 680px), (pointer: coarse)").matches;
+  const columns = isMobileIntro ? 10 : 24;
+  const rows = isMobileIntro ? 6 : 14;
+  const dustCount = isMobileIntro ? 50 : 360;
+  const pieces = Array.from({ length: columns * rows }, (_, index) => {
+    const column = index % columns;
+    const row = Math.floor(index / columns);
+    const left = (column / columns) * 100;
+    const top = (row / rows) * 100;
+    const right = 100 - ((column + 1) / columns) * 100;
+    const bottom = 100 - ((row + 1) / rows) * 100;
+    const dx = (column + 0.5) / columns - 0.5;
+    const dy = (row + 0.5) / rows - 0.5;
+    const wave = Math.sin(index * 12.9898) * Math.cos(index * 78.233);
+    const distance = 180 + Math.hypot(dx, dy) * 560 + Math.abs(wave) * 150;
+    const angle = Math.atan2(dy, dx) + wave * 0.9;
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+    const rotate = wave * 520;
+
+    return `<span class="brand-intro__piece" style="--clip: inset(${top}% ${right}% ${bottom}% ${left}%); --x: ${x.toFixed(1)}px; --y: ${y.toFixed(1)}px; --r: ${rotate.toFixed(1)}deg;">
       <img src="${content.header.logo}" alt="" />
+    </span>`;
+  }).join("");
+  const dust = Array.from({ length: dustCount }, (_, index) => {
+    const spiral = index * 2.399963;
+    const ring = Math.sqrt(index / dustCount);
+    const wave = Math.sin(index * 19.19);
+    const distance = 90 + ring * 660 + Math.abs(wave) * 170;
+    const x = Math.cos(spiral + wave) * distance;
+    const y = Math.sin(spiral + wave) * distance;
+    const size = 1 + (index % 5) * 0.55;
+    const hue = index % 3;
+
+    return `<i class="brand-intro__dust brand-intro__dust--${hue}" style="--x: ${x.toFixed(1)}px; --y: ${y.toFixed(1)}px; --s: ${size.toFixed(2)}px;"></i>`;
+  }).join("");
+
+  const intro = document.createElement("div");
+  intro.className = "brand-intro";
+  intro.setAttribute("aria-hidden", "true");
+  intro.innerHTML = `
+    <div class="brand-intro__logo">
+      <img class="brand-intro__whole" src="${content.header.logo}" alt="" />
+      ${pieces}
+      ${dust}
     </div>
-  `);
+  `;
+  window.setTimeout(() => intro.remove(), 3400);
+
+  return intro;
 }
 
 export function renderApp(root) {

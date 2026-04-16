@@ -6,16 +6,30 @@
   align-items: center;
   animation: introFade 3.2s ease forwards;
   background:
+    radial-gradient(circle, rgba(255, 238, 171, 0.22) 0 10%, transparent 34%),
     linear-gradient(180deg, rgba(251, 250, 246, 0.98), rgba(18, 68, 82, 0.94));
   display: flex;
   inset: 0;
   justify-content: center;
   pointer-events: none;
   position: fixed;
+  --intro-target-scale: 0.36;
+  --intro-target-x: calc(-50vw + clamp(18px, 5vw, 72px) + min(130px, 29vw));
+  --intro-target-y: calc(-50vh + 45px);
   z-index: 100;
 }
 
-.brand-intro img {
+.brand-intro::before {
+  animation: introBurst 3.2s ease forwards;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 3%, rgba(242, 184, 75, 0.7) 9%, rgba(81, 204, 229, 0.32) 18%, transparent 42%);
+  content: "";
+  inset: 0;
+  position: absolute;
+  transform: scale(0.18);
+}
+
+.brand-intro__logo {
   animation: introLogo 3.2s ease forwards;
   filter:
     drop-shadow(0 0 10px rgba(255, 226, 140, 0.98))
@@ -23,7 +37,59 @@
     drop-shadow(0 0 62px rgba(14, 111, 131, 0.86));
   max-height: min(52vh, 520px);
   max-width: min(76vw, 720px);
+  position: relative;
+  width: min(76vw, 720px);
+}
+
+.brand-intro__whole,
+.brand-intro__piece img {
+  display: block;
+  width: 100%;
+}
+
+.brand-intro__whole {
+  animation: introWhole 3.2s ease forwards;
+}
+
+.brand-intro__piece {
+  animation: introPiece 3.2s ease forwards;
+  clip-path: var(--clip);
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  transform-origin: center;
+}
+
+.brand-intro__piece img {
+  height: 100%;
   object-fit: contain;
+}
+
+.brand-intro__dust {
+  animation: introDust 3.2s ease forwards;
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 0 10px currentColor;
+  color: #ffffff;
+  height: var(--s);
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0) scale(0.2);
+  width: var(--s);
+}
+
+.brand-intro__dust--0 {
+  color: #f2b84b;
+}
+
+.brand-intro__dust--1 {
+  color: #51cce5;
+}
+
+.brand-intro__dust--2 {
+  color: #ffffff;
 }
 
 .site-header {
@@ -383,6 +449,12 @@
 }
 
 @media (max-width: 680px) {
+  .brand-intro {
+    --intro-target-scale: 0.16;
+    --intro-target-x: calc(-50vw + 35px);
+    --intro-target-y: calc(-50vh + 27px);
+  }
+
   .site-header {
     align-items: center;
     display: grid;
@@ -466,14 +538,18 @@
 
 @media (prefers-reduced-motion: reduce) {
   .brand-intro,
-  .brand-intro img {
+  .brand-intro::before,
+  .brand-intro__logo,
+  .brand-intro__whole,
+  .brand-intro__piece,
+  .brand-intro__dust {
     animation-duration: 0.01ms;
   }
 }
 
 @keyframes introFade {
   0%,
-  82% {
+  88% {
     opacity: 1;
   }
 
@@ -486,22 +562,120 @@
 @keyframes introLogo {
   0% {
     opacity: 0;
-    transform: scale(0.8) rotate(-2deg);
+    transform: scale(0.86);
   }
 
-  22% {
+  18%,
+  60% {
     opacity: 1;
-    transform: scale(1.03) rotate(1deg);
+    transform: scale(1);
   }
 
-  48%,
-  72% {
+  78% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  94% {
+    opacity: 1;
+    transform: translate3d(var(--intro-target-x), var(--intro-target-y), 0) scale(var(--intro-target-scale));
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--intro-target-x), var(--intro-target-y), 0) scale(var(--intro-target-scale));
+  }
+}
+
+@keyframes introWhole {
+  0%,
+  52% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  58%,
+  82% {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+
+  92% {
     opacity: 1;
     transform: scale(1);
   }
 
   100% {
     opacity: 0;
-    transform: scale(0.96) translateY(-12px);
+    transform: scale(1);
+  }
+}
+
+@keyframes introPiece {
+  0%,
+  52% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  56% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  76% {
+    opacity: 0;
+    transform: translate3d(var(--x), var(--y), 0) rotate(var(--r)) scale(0.18);
+  }
+
+  86% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes introDust {
+  0%,
+  48% {
+    opacity: 0;
+    transform: translate3d(-50%, -50%, 0) scale(0.2);
+  }
+
+  55% {
+    opacity: 1;
+    transform: translate3d(-50%, -50%, 0) scale(1);
+  }
+
+  78% {
+    opacity: 0;
+    transform: translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0) scale(0.08);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0) scale(0.08);
+  }
+}
+
+@keyframes introBurst {
+  0%,
+  48% {
+    opacity: 0;
+    transform: scale(0.18);
+  }
+
+  55% {
+    opacity: 0.95;
+    transform: scale(0.72);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
   }
 }
