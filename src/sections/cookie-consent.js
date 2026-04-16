@@ -20,16 +20,16 @@ export function createCookieConsent() {
   const banner = el("section", {
     className: "cookie-consent",
     role: "dialog",
-    "aria-label": "Prefer\u00eancias de cookies",
+    "aria-label": "Preferencias de cookies",
   }, [
     el("div", { className: "cookie-consent__copy" }, [
-      el("strong", { text: "Cookies do Garimpo N\u00e1utico" }),
+      el("strong", { text: "Cookies do Garimpo Nautico" }),
       el("p", {
-        text: "Usamos cookies essenciais para o site funcionar. Com sua autoriza\u00e7\u00e3o, medimos visitas e lembramos voc\u00ea de produtos n\u00e1uticos em an\u00fancios.",
+        text: "Usamos cookies essenciais para o site funcionar. Com sua autorizacao, medimos visitas e lembramos voce de produtos nauticos em anuncios.",
       }),
       el("a", {
         href: "/privacidade",
-        text: "Ler pol\u00edtica de privacidade",
+        text: "Ler politica de privacidade",
         onClick: (event) => {
           event.preventDefault();
           navigate("/privacidade");
@@ -46,7 +46,7 @@ export function createCookieConsent() {
       el("button", {
         className: "button",
         type: "button",
-        text: "Aceitar medi\u00e7\u00e3o e an\u00fancios",
+        text: "Aceitar medicao e anuncios",
         onClick: () => acceptAll(banner),
       }),
     ]),

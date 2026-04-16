@@ -13,20 +13,6 @@ import { createProductsPage } from "./sections/products-page.js";
 
 let hasShownIntro = false;
 
-function getRaphaelIntroMode() {
-  const params = new URLSearchParams(window.location.search);
-
-  return params.get("raphael") === "1" || params.get("surpresa") === "raphael";
-}
-
-function clearRaphaelIntroMode() {
-  const url = new URL(window.location.href);
-
-  url.searchParams.delete("raphael");
-  url.searchParams.delete("surpresa");
-  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
-}
-
 function createPage(route) {
   if (route.startsWith("/produto/")) {
     return createProductDetailPage(decodeURIComponent(route.replace("/produto/", "")));
@@ -47,12 +33,11 @@ function createPage(route) {
   return createProductsPage(content.productsPage);
 }
 
-function createIntro({ raphael = false } = {}) {
+function createIntro() {
   const isMobileIntro = window.matchMedia("(max-width: 680px), (pointer: coarse)").matches;
   const columns = isMobileIntro ? 10 : 24;
   const rows = isMobileIntro ? 6 : 14;
   const dustCount = isMobileIntro ? 50 : 360;
-  const fireworkCount = isMobileIntro ? 7 : 14;
   const pieces = Array.from({ length: columns * rows }, (_, index) => {
     const column = index % columns;
     const row = Math.floor(index / columns);
@@ -85,17 +70,9 @@ function createIntro({ raphael = false } = {}) {
 
     return `<i class="brand-intro__dust brand-intro__dust--${hue}" style="--x: ${x.toFixed(1)}px; --y: ${y.toFixed(1)}px; --s: ${size.toFixed(2)}px;"></i>`;
   }).join("");
-  const fireworks = Array.from({ length: fireworkCount }, (_, index) => {
-    const x = 8 + ((index * 23) % 84);
-    const y = 10 + ((index * 31) % 48);
-    const delay = 0.62 + (index % 7) * 0.14;
-    const color = ["#f2b84b", "#51cce5", "#ffffff", "#ef5b4d"][index % 4];
-
-    return `<i class="brand-intro__firework" style="--fx: ${x}%; --fy: ${y}%; --fd: ${delay.toFixed(2)}s; --fc: ${color};"></i>`;
-  }).join("");
 
   const intro = document.createElement("div");
-  intro.className = raphael ? "brand-intro brand-intro--raphael" : "brand-intro";
+  intro.className = "brand-intro";
   intro.setAttribute("aria-hidden", "true");
   intro.innerHTML = `
     <div class="brand-intro__logo">
@@ -103,12 +80,6 @@ function createIntro({ raphael = false } = {}) {
       ${pieces}
       ${dust}
     </div>
-    ${raphael ? `
-      <div class="brand-intro__fireworks">${fireworks}</div>
-      <div class="brand-intro__raphael-name">
-        <span>Raphael</span>
-      </div>
-    ` : ""}
   `;
   window.setTimeout(() => intro.remove(), 3200);
 
@@ -122,20 +93,16 @@ export function renderApp(root) {
 
   const render = () => {
     const route = getRoute();
-    const raphaelIntro = getRaphaelIntroMode();
     const showIntro = !hasShownIntro;
     hasShownIntro = true;
 
     mount(root, [
-      showIntro ? createIntro({ raphael: raphaelIntro }) : null,
+      showIntro ? createIntro() : null,
       createHeader(content.header, route),
       createCustomerGreeting(),
       createPage(route),
       createCookieConsent(),
     ]);
-    if (raphaelIntro) {
-      clearRaphaelIntroMode();
-    }
     trackPageView({ route });
   };
 

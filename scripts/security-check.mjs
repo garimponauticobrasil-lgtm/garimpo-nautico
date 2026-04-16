@@ -11,7 +11,7 @@ const requiredHeaders = [
 const response = await fetch(baseUrl);
 
 if (!response.ok) {
-  throw new Error(`P\u00e1gina inicial retornou HTTP ${response.status}.`);
+  throw new Error(`Pagina inicial retornou HTTP ${response.status}.`);
 }
 
 const missingHeaders = requiredHeaders.filter((header) => !response.headers.has(header));
@@ -33,7 +33,7 @@ const blockedApiResponse = await fetch(`${baseUrl}/api/leads`, {
 });
 
 if (![401, 503].includes(blockedApiResponse.status)) {
-  throw new Error(`API sem autoriza\u00e7\u00e3o deveria retornar 401 ou 503, mas retornou ${blockedApiResponse.status}.`);
+  throw new Error(`API sem autorizacao deveria retornar 401 ou 503, mas retornou ${blockedApiResponse.status}.`);
 }
 
-console.log("Verifica\u00e7\u00e3o de seguran\u00e7a local conclu\u00edda.");
+console.log("Verificacao de seguranca local concluida.");

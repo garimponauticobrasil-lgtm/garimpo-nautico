@@ -92,85 +92,6 @@
   color: #ffffff;
 }
 
-.brand-intro__fireworks {
-  inset: 0;
-  overflow: hidden;
-  position: absolute;
-}
-
-.brand-intro__firework {
-  animation: raphaelFirework 1.35s ease-out var(--fd) forwards;
-  color: var(--fc);
-  height: 8px;
-  left: var(--fx);
-  opacity: 0;
-  position: absolute;
-  top: var(--fy);
-  width: 8px;
-}
-
-.brand-intro__firework::before,
-.brand-intro__firework::after {
-  background: currentColor;
-  box-shadow:
-    0 -32px 0 currentColor,
-    23px -23px 0 currentColor,
-    32px 0 0 currentColor,
-    23px 23px 0 currentColor,
-    0 32px 0 currentColor,
-    -23px 23px 0 currentColor,
-    -32px 0 0 currentColor,
-    -23px -23px 0 currentColor;
-  content: "";
-  height: 5px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.18);
-  width: 5px;
-}
-
-.brand-intro__firework::after {
-  box-shadow:
-    0 -22px 0 currentColor,
-    16px -16px 0 currentColor,
-    22px 0 0 currentColor,
-    16px 16px 0 currentColor,
-    0 22px 0 currentColor,
-    -16px 16px 0 currentColor,
-    -22px 0 0 currentColor,
-    -16px -16px 0 currentColor;
-  transform: translate(-50%, -50%) rotate(22deg) scale(0.18);
-}
-
-.brand-intro__raphael-name {
-  animation: raphaelName 2.7s ease forwards;
-  bottom: clamp(58px, 11vh, 120px);
-  color: #ffffff;
-  font-weight: 900;
-  left: 50%;
-  letter-spacing: 0;
-  position: absolute;
-  text-align: center;
-  text-transform: uppercase;
-  transform: translateX(-50%);
-  width: min(90vw, 760px);
-}
-
-.brand-intro__raphael-name span {
-  background: linear-gradient(90deg, #f2b84b, #ffffff 42%, #51cce5);
-  background-clip: text;
-  -webkit-background-clip: text;
-  display: inline-block;
-  filter:
-    drop-shadow(0 0 10px rgba(255, 226, 140, 0.95))
-    drop-shadow(0 0 30px rgba(14, 111, 131, 0.9));
-  font-size: 6rem;
-  line-height: 0.9;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 22px rgba(242, 184, 75, 0.32);
-}
-
 .site-header {
   align-items: center;
   background: rgba(251, 250, 246, 0.96);
@@ -534,14 +455,6 @@
     --intro-target-y: calc(-50vh + 33px);
   }
 
-  .brand-intro__raphael-name {
-    bottom: clamp(70px, 13vh, 120px);
-  }
-
-  .brand-intro__raphael-name span {
-    font-size: 3.2rem;
-  }
-
   .site-header {
     align-items: center;
     display: grid;
@@ -630,11 +543,6 @@
   .brand-intro__whole,
   .brand-intro__piece,
   .brand-intro__dust {
-    animation-duration: 0.01ms;
-  }
-
-  .brand-intro__firework,
-  .brand-intro__raphael-name {
     animation-duration: 0.01ms;
   }
 }
@@ -769,46 +677,5 @@
   100% {
     opacity: 0;
     transform: scale(2.4);
-  }
-}
-
-@keyframes raphaelFirework {
-  0% {
-    opacity: 0;
-    transform: scale(0.12);
-  }
-
-  18% {
-    opacity: 1;
-    transform: scale(0.28);
-  }
-
-  72% {
-    opacity: 1;
-    transform: scale(1.35);
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale(1.9);
-  }
-}
-
-@keyframes raphaelName {
-  0%,
-  48% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(18px) scale(0.92);
-  }
-
-  62%,
-  86% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-10px) scale(1.03);
   }
 }

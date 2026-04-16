@@ -1,8 +1,8 @@
 .git
 .vercel
-.vercel-*
 .env
 .env.*
+!.env.example
 
 server.mjs
 package.json

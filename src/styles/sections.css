@@ -18,7 +18,7 @@ p {
 }
 
 h1 {
-  font-size: 5.4rem;
+  font-size: clamp(2.9rem, 8vw, 6.9rem);
   letter-spacing: 0;
   line-height: 0.95;
   margin-bottom: 22px;
@@ -30,7 +30,7 @@ h1 {
 }
 
 h2 {
-  font-size: 2.5rem;
+  font-size: clamp(1.65rem, 3.2vw, 3rem);
   letter-spacing: 0;
   line-height: 1;
   margin-bottom: 18px;
@@ -38,7 +38,7 @@ h2 {
 
 .hero-text {
   color: var(--muted);
-  font-size: 1.16rem;
+  font-size: clamp(1.04rem, 2vw, 1.22rem);
   max-width: 720px;
 }
 
@@ -693,7 +693,7 @@ textarea:focus {
 }
 
 .form-heading h2 {
-  font-size: 2rem;
+  font-size: clamp(1.55rem, 3vw, 2.35rem);
   margin-bottom: 8px;
   text-align: center;
 }
@@ -784,7 +784,7 @@ textarea:focus {
 }
 
 .gallery-header h2 {
-  font-size: 1.8rem;
+  font-size: clamp(1.35rem, 3vw, 2.2rem);
   margin: 0;
 }
 
@@ -1007,7 +1007,7 @@ textarea:focus {
 }
 
 .privacy-content h2 {
-  font-size: 1.7rem;
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
   margin: 18px 0 0;
 }
 
@@ -1031,32 +1031,11 @@ textarea:focus {
   }
 
   h1 {
-    font-size: 3.25rem;
     max-width: 100%;
   }
 
-  h2 {
-    font-size: 2rem;
-  }
-
-  .hero-text {
-    font-size: 1.04rem;
-  }
-
-  .form-heading h2 {
-    font-size: 1.75rem;
-  }
-
-  .gallery-header h2 {
-    font-size: 1.45rem;
-  }
-
-  .privacy-content h2 {
-    font-size: 1.45rem;
-  }
-
   .lead-intro h1 {
-    font-size: 2.75rem;
+    font-size: clamp(2.35rem, 11vw, 3.35rem);
     max-width: 11ch;
   }
 

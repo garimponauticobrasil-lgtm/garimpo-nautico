@@ -7,21 +7,7 @@
     }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "headers": {
-        "Content-Security-Policy": "default-src 'self'; base-uri 'self'; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.facebook.com https://connect.facebook.net; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: https://www.google-analytics.com https://stats.g.doubleclick.net https://www.facebook.com; object-src 'none'; script-src 'self' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self'",
-        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
-        "Referrer-Policy": "strict-origin-when-cross-origin",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY"
-      },
-      "continue": true
-    },
     { "handle": "filesystem" },
-    { "src": "/produtos", "dest": "/index.html" },
-    { "src": "/captacao", "dest": "/index.html" },
-    { "src": "/loja", "dest": "/index.html" },
     { "src": "/produto/.*", "dest": "/index.html" },
     { "src": "/privacidade", "dest": "/index.html" }
   ],
