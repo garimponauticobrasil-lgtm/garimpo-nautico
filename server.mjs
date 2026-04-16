@@ -117,7 +117,7 @@ async function handleApi(request, response, pathname) {
       await readJsonBody(request);
     } catch {
       response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
-      response.end(JSON.stringify({ error: "JSON invalido ou payload muito grande." }));
+      response.end(JSON.stringify({ error: "JSON inv\u00e1lido ou payload muito grande." }));
       return;
     }
 
@@ -159,7 +159,7 @@ const server = createServer(async (request, response) => {
 
   if (!["GET", "HEAD"].includes(request.method)) {
     response.writeHead(405, { "content-type": "text/plain; charset=utf-8" });
-    response.end("Metodo não permitido.");
+    response.end("M\u00e9todo n\u00e3o permitido.");
     return;
   }
 
