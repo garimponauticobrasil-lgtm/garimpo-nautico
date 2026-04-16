@@ -1,7 +1,10 @@
 import { categories, formatPrice, products } from "../lib/products.js";
-import { addCartItem } from "../lib/cart.js";
+import { addCartItem, getCartQuantity } from "../lib/cart.js";
+import { trackEvent } from "../lib/analytics.js";
 import { el } from "../lib/dom.js";
+import { getInventory } from "../lib/products.js";
 import { navigate } from "../lib/router.js";
+import { recordIntentEvent, recordProductView, recordSearch } from "../lib/visitor-intent.js";
 
 const allCategories = "Todas";
 
@@ -97,17 +100,47 @@ function createGallery(product, startIndex = 0) {
 }
 
 function openGallery(product) {
+  recordProductView(product);
+  trackEvent("view_item_gallery", {
+    item_id: product.id,
+    item_name: product.title,
+    item_category: product.category,
+    value: product.price,
+    currency: "BRL",
+  });
   document.body.append(createGallery(product));
 }
 
 function createProductCard(product) {
+  const inventory = getInventory(product);
+  const initialQuantity = getCartQuantity(product.id);
+  const canAddInitial = inventory.stock > 0 && initialQuantity < inventory.stock;
   const cartButton = el("button", {
     className: "button button-small",
     type: "button",
-    text: "Colocar no carrinho",
+    text: inventory.stock <= 0
+      ? "Indisponível"
+      : canAddInitial
+        ? "Colocar no carrinho"
+        : "Limite no carrinho",
+    disabled: !canAddInitial,
     onClick: () => {
-      addCartItem(product.id);
-      cartButton.textContent = "Adicionado";
+      addCartItem(product.id, inventory.stock);
+      const quantity = getCartQuantity(product.id);
+      trackEvent("add_to_cart", {
+        currency: "BRL",
+        value: product.price,
+        items: [{
+          item_id: product.id,
+          item_name: product.title,
+          item_category: product.category,
+          price: product.price,
+          quantity: 1,
+        }],
+      });
+      recordIntentEvent("add_to_cart", { productId: product.id, location: "product_card" });
+      cartButton.textContent = quantity >= inventory.stock ? "Limite no carrinho" : "Adicionado";
+      cartButton.disabled = quantity >= inventory.stock;
     },
   });
 
@@ -126,7 +159,7 @@ function createProductCard(product) {
       el("div", { className: "product-meta" }, [
         el("span", { text: product.category }),
         el("span", { text: product.condition }),
-        el("span", { text: "Avaliado pelo Garimpo" }),
+        el("span", { text: inventory.status }),
       ]),
       el("h2", { text: product.title }),
       el("p", { className: "product-description", text: product.description }),
@@ -146,11 +179,11 @@ function createProductCard(product) {
           cartButton,
           el("a", {
             className: "button button-small button-secondary",
-            href: `/captacao?produto=${product.id}`,
-            text: "Consultar",
+            href: `/produto/${product.id}`,
+            text: "Detalhes",
             onClick: (event) => {
               event.preventDefault();
-              navigate("/captacao");
+              navigate(`/produto/${product.id}`);
             },
           }),
         ]),
@@ -240,10 +273,47 @@ export function createProductsPage({ eyebrow, title, text, empty, actions, proof
     ]));
   };
 
-  searchInput.addEventListener("input", renderList);
-  categorySelect.addEventListener("change", renderList);
-  conditionSelect.addEventListener("change", renderList);
-  sortSelect.addEventListener("change", renderList);
+  let searchTimer;
+  const recordSearchIntent = () => {
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(() => {
+      const query = searchInput.value.trim();
+
+      if (!query) {
+        return;
+      }
+
+      const filters = {
+        category: categorySelect.value,
+        condition: conditionSelect.value,
+        sort: sortSelect.value,
+      };
+      recordSearch(query, filters);
+      trackEvent("search", {
+        search_term: query,
+        category: filters.category,
+        condition: filters.condition,
+        sort: filters.sort,
+      });
+    }, 650);
+  };
+
+  searchInput.addEventListener("input", () => {
+    renderList();
+    recordSearchIntent();
+  });
+  categorySelect.addEventListener("change", () => {
+    renderList();
+    recordIntentEvent("filter_change", { filter: "category", value: categorySelect.value });
+  });
+  conditionSelect.addEventListener("change", () => {
+    renderList();
+    recordIntentEvent("filter_change", { filter: "condition", value: conditionSelect.value });
+  });
+  sortSelect.addEventListener("change", () => {
+    renderList();
+    recordIntentEvent("sort_change", { value: sortSelect.value });
+  });
   renderList();
 
   return el("main", { className: "page-shell products-page" }, [

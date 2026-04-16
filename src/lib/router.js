@@ -1,15 +1,19 @@
-const routes = new Set(["/", "/produtos", "/captacao", "/loja"]);
+const routes = new Set(["/", "/produtos", "/captacao", "/loja", "/privacidade"]);
 
 export function getRoute() {
   if (window.location.pathname === "/") {
-    return "/produtos";
+    return "/";
   }
 
-  return routes.has(window.location.pathname) ? window.location.pathname : "/produtos";
+  if (window.location.pathname.startsWith("/produto/")) {
+    return window.location.pathname;
+  }
+
+  return routes.has(window.location.pathname) ? window.location.pathname : "/";
 }
 
 export function navigate(path) {
-  if (!routes.has(path)) {
+  if (!routes.has(path) && !path.startsWith("/produto/")) {
     return;
   }
 

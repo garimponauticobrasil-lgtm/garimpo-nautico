@@ -2,7 +2,7 @@
   "name": "Garimpo N\u00e1utico",
   "short_name": "Garimpo",
   "description": "Consulta de pe\u00e7as usadas n\u00e1uticas com atendimento do Garimpo N\u00e1utico.",
-  "start_url": "/produtos",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#fbfaf6",

@@ -1,4 +1,7 @@
+import { saveCustomer } from "../lib/customer.js";
+import { trackEvent } from "../lib/analytics.js";
 import { el } from "../lib/dom.js";
+import { markConverted, recordIntentEvent } from "../lib/visitor-intent.js";
 
 function createField(label, control) {
   return el("label", { className: "form-field" }, [
@@ -56,6 +59,23 @@ export function createLeadPage({
         return;
       }
 
+      saveCustomer({
+        name: data.nome,
+        contact: data.whatsapp,
+        source: "lead-form",
+      });
+      trackEvent("lead_submit", {
+        lead_type: data.objetivo,
+        product_interest: data.peca,
+        urgency: data.urgencia,
+        city: data.local,
+      });
+      recordIntentEvent("lead_submit", {
+        objetivo: data.objetivo,
+        peca: data.peca,
+        urgencia: data.urgencia,
+      });
+      markConverted("lead");
       event.currentTarget.reset();
       status.textContent = success;
       status.setAttribute("data-state", "success");

@@ -1,15 +1,14 @@
-import { readCart, updateCartItem } from "../lib/cart.js";
+import { clearCart, readCart, updateCartItem } from "../lib/cart.js";
+import { saveCustomer } from "../lib/customer.js";
+import { trackEvent } from "../lib/analytics.js";
 import { el } from "../lib/dom.js";
 import { navigate } from "../lib/router.js";
-import { formatPrice, products } from "../lib/products.js";
-
-function getProduct(id) {
-  return products.find((product) => product.id === id);
-}
+import { markConverted, recordIntentEvent } from "../lib/visitor-intent.js";
+import { findProduct, formatPrice, getInventory } from "../lib/products.js";
 
 function getCartItems(cart) {
   return Object.entries(cart)
-    .map(([id, quantity]) => ({ product: getProduct(id), quantity }))
+    .map(([id, quantity]) => ({ product: findProduct(id), quantity }))
     .filter((item) => item.product && item.quantity > 0);
 }
 
@@ -32,15 +31,22 @@ function buildWhatsAppMessage(items, formData) {
     `Nome: ${formData.get("nome")}`,
     `WhatsApp: ${formData.get("whatsapp")}`,
     `Cidade: ${formData.get("cidade")}`,
+    `Entrega: ${formData.get("entrega")}`,
+    `Endereço/retirada: ${formData.get("endereco") || "A combinar"}`,
+    `Pagamento: ${formData.get("pagamento")}`,
     `Observação: ${formData.get("observacao") || "Sem observação"}`,
   ].join("\n");
 }
 
 function createCartItem({ product, quantity }, updateQuantity) {
+  const inventory = getInventory(product);
+  const canAdd = quantity < inventory.stock;
+
   return el("div", { className: "cart-item" }, [
     el("div", {}, [
       el("strong", { text: product.title }),
       el("p", { text: `${quantity} x ${formatPrice(product.price)}` }),
+      el("small", { text: `${inventory.status} · ${inventory.stock} em estoque` }),
     ]),
     el("div", { className: "cart-item__actions" }, [
       el("button", {
@@ -53,6 +59,7 @@ function createCartItem({ product, quantity }, updateQuantity) {
       el("button", {
         type: "button",
         "aria-label": `Aumentar ${product.title}`,
+        disabled: !canAdd,
         text: "+",
         onClick: () => updateQuantity(product.id, quantity + 1),
       }),
@@ -79,22 +86,25 @@ export function createShopPage(copy, checkoutHref) {
           el("p", { text: copy.emptyCart }),
           el("a", {
             className: "button button-secondary",
-            href: "/produtos",
+            href: "/",
             text: "Escolher peças",
             onClick: (event) => {
               event.preventDefault();
-              navigate("/produtos");
+              navigate("/");
             },
           }),
         ]),
-    ]));
+      ]));
     cartTotal.textContent = `Total: ${formatPrice(total)}`;
     checkoutButton.disabled = items.length === 0;
     checkoutForm.hidden = items.length === 0;
   };
 
   function updateQuantity(id, quantity) {
-    cart = updateCartItem(id, quantity);
+    const product = findProduct(id);
+    const inventory = product ? getInventory(product) : { stock: 0 };
+
+    cart = updateCartItem(id, quantity, inventory.stock);
     renderCart();
   }
 
@@ -111,6 +121,28 @@ export function createShopPage(copy, checkoutHref) {
       }
 
       const message = buildWhatsAppMessage(items, new FormData(event.currentTarget));
+      const data = new FormData(event.currentTarget);
+      saveCustomer({
+        name: data.get("nome"),
+        contact: data.get("whatsapp"),
+        source: "checkout",
+      });
+      trackEvent("begin_checkout_whatsapp", {
+        value: items.reduce((sum, { product, quantity }) => sum + product.price * quantity, 0),
+        currency: "BRL",
+        items: items.map(({ product, quantity }) => ({
+          item_id: product.id,
+          item_name: product.title,
+          item_category: product.category,
+          price: product.price,
+          quantity,
+        })),
+      });
+      recordIntentEvent("checkout_whatsapp", {
+        itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
+      });
+      markConverted("checkout_whatsapp");
+      clearCart();
       window.location.href = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
     },
   }, [
@@ -127,6 +159,25 @@ export function createShopPage(copy, checkoutHref) {
     el("label", { className: "form-field" }, [
       el("span", { text: "Cidade" }),
       el("input", { name: "cidade", placeholder: "Cidade e estado", required: true, type: "text" }),
+    ]),
+    el("label", { className: "form-field" }, [
+      el("span", { text: "Entrega" }),
+      el("select", { name: "entrega", required: true }, [
+        el("option", { value: "Retirada combinada", text: "Retirada combinada" }),
+        el("option", { value: "Cotar envio", text: "Cotar envio" }),
+      ]),
+    ]),
+    el("label", { className: "form-field" }, [
+      el("span", { text: "Endereço ou marina" }),
+      el("input", { name: "endereco", placeholder: "Para cotar envio ou combinar retirada", type: "text" }),
+    ]),
+    el("label", { className: "form-field" }, [
+      el("span", { text: "Pagamento" }),
+      el("select", { name: "pagamento", required: true }, [
+        el("option", { value: "A combinar com a equipe", text: "A combinar com a equipe" }),
+        el("option", { value: "Pix após confirmação", text: "Pix após confirmação" }),
+        el("option", { value: "Cartão/link após confirmação", text: "Cartão/link após confirmação" }),
+      ]),
     ]),
     el("label", { className: "form-field" }, [
       el("span", { text: "Observação" }),

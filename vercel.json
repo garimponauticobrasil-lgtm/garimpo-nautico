@@ -6,5 +6,36 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [{ "handle": "filesystem" }]
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/produto/.*", "dest": "/index.html" },
+    { "src": "/privacidade", "dest": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; base-uri 'self'; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.facebook.com https://connect.facebook.net; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: https://www.google-analytics.com https://stats.g.doubleclick.net https://www.facebook.com; object-src 'none'; script-src 'self' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self'"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=()"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
+      ]
+    }
+  ]
 }

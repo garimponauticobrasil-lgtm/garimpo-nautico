@@ -1,5 +1,8 @@
+import { getCartCount } from "../lib/cart.js";
+import { trackEvent } from "../lib/analytics.js";
 import { el } from "../lib/dom.js";
 import { navigate } from "../lib/router.js";
+import { markConverted, recordIntentEvent } from "../lib/visitor-intent.js";
 
 function createWhatsAppIcon() {
   const namespace = "http://www.w3.org/2000/svg";
@@ -39,11 +42,20 @@ function createCartIcon() {
 
 function createNavLink(link, currentPath) {
   const isActive = link.href === currentPath;
-  const children = link.icon === "cart"
-    ? [createCartIcon(), el("span", { className: "visually-hidden", text: link.label })]
-    : link.label;
+  const cartBadge = link.icon === "cart" ? el("span", { className: "cart-badge" }) : null;
+  const updateCartBadge = () => {
+    if (!cartBadge) {
+      return;
+    }
 
-  return el("a", {
+    const count = getCartCount();
+    cartBadge.textContent = String(count);
+    cartBadge.hidden = count === 0;
+  };
+  const children = link.icon === "cart"
+    ? [createCartIcon(), cartBadge, el("span", { className: "visually-hidden", text: link.label })]
+    : link.label;
+  const linkNode = el("a", {
     href: link.href,
     className: link.icon ? "site-nav__icon-link" : undefined,
     "aria-label": link.icon ? link.label : undefined,
@@ -54,6 +66,14 @@ function createNavLink(link, currentPath) {
       navigate(link.href);
     },
   }, children);
+
+  if (link.icon === "cart") {
+    updateCartBadge();
+    window.addEventListener("garimpo:cart-change", updateCartBadge);
+    window.addEventListener("storage", updateCartBadge);
+  }
+
+  return linkNode;
 }
 
 function isInternalPath(href) {
@@ -64,11 +84,11 @@ export function createHeader({ brand, logo, links, account }, currentPath) {
   return el("header", { className: "site-header" }, [
     el("a", {
       className: "brand",
-      href: "/produtos",
+      href: "/",
       "aria-label": brand,
       onClick: (event) => {
         event.preventDefault();
-        navigate("/produtos");
+        navigate("/");
       },
     }, [
       el("img", { src: logo, alt: brand }),
@@ -83,6 +103,10 @@ export function createHeader({ brand, logo, links, account }, currentPath) {
         className: "account-link",
         href: account.href,
         onClick: (event) => {
+          trackEvent("contact_whatsapp_click", { location: "header" });
+          recordIntentEvent("whatsapp_click", { location: "header" });
+          markConverted("whatsapp");
+
           if (!isInternalPath(account.href)) {
             return;
           }

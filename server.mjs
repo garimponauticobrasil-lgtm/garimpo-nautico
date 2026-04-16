@@ -32,9 +32,10 @@ const securityHeaders = {
     "base-uri 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
-    "img-src 'self' data:",
+    "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.facebook.com https://connect.facebook.net",
+    "img-src 'self' data: https://www.google-analytics.com https://stats.g.doubleclick.net https://www.facebook.com",
     "object-src 'none'",
-    "script-src 'self'",
+    "script-src 'self' https://www.googletagmanager.com https://connect.facebook.net",
     "style-src 'self'",
   ].join("; "),
   "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=()",
@@ -45,7 +46,11 @@ const securityHeaders = {
 
 function resolvePath(url) {
   const pathname = decodeURIComponent(new URL(url, `http://${host}`).pathname);
-  const requested = ["/", "/produtos", "/captacao", "/loja"].includes(pathname) ? "/index.html" : pathname;
+  const requested = pathname === "/marketing-lab"
+    ? "/marketing-lab/index.html"
+    : ["/", "/produtos", "/captacao", "/loja", "/privacidade"].includes(pathname) || pathname.startsWith("/produto/")
+    ? "/index.html"
+    : pathname;
   const filePath = normalize(join(root, requested));
 
   return filePath.startsWith(root) ? filePath : null;
@@ -107,7 +112,7 @@ async function handleApi(request, response, pathname) {
     return;
   }
 
-  if (pathname === "/api/leads" && request.method === "POST") {
+  if ((pathname === "/api/leads" || pathname === "/api/orders") && request.method === "POST") {
     try {
       await readJsonBody(request);
     } catch {
@@ -117,7 +122,7 @@ async function handleApi(request, response, pathname) {
     }
 
     response.writeHead(202, { "content-type": "application/json; charset=utf-8" });
-    response.end(JSON.stringify({ status: "recebido" }));
+    response.end(JSON.stringify({ status: "recebido", resource: pathname.replace("/api/", "") }));
     return;
   }
 
@@ -129,7 +134,8 @@ function isPublicPath(filePath) {
   const relativePath = filePath.slice(root.length).replaceAll("\\", "/");
 
   return ["/index.html", "/manifest.webmanifest", "/service-worker.js"].includes(relativePath)
-    || relativePath.startsWith("/src/");
+    || relativePath.startsWith("/src/")
+    || relativePath.startsWith("/marketing-lab/");
 }
 
 const server = createServer(async (request, response) => {

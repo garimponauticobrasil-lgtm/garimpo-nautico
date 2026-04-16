@@ -3,7 +3,7 @@ export const content = {
     brand: "Garimpo N\u00e1utico",
     logo: "/src/assets/logo-garimpo-nautico-transparent.png",
     links: [
-      { label: "Produtos", href: "/produtos" },
+      { label: "Produtos", href: "/" },
       { label: "Carrinho", href: "/loja", icon: "cart" },
       { label: "Atendimento", href: "/captacao" },
     ],
@@ -27,7 +27,7 @@ export const content = {
     text: "O Garimpo N\u00e1utico seleciona pe\u00e7as usadas para barcos, lanchas e jets, organiza as informa\u00e7\u00f5es t\u00e9cnicas e atende a consulta do in\u00edcio ao pr\u00f3ximo passo.",
     empty: "N\u00e3o apareceu nada com esses filtros. Envie uma solicita\u00e7\u00e3o e a equipe procura o melhor caminho para voc\u00ea.",
     actions: [
-      { label: "Consultar cat\u00e1logo", href: "/produtos" },
+      { label: "Consultar cat\u00e1logo", href: "/" },
       { label: "Oferecer uma pe\u00e7a", href: "/captacao", secondary: true },
     ],
     proofPoints: [
@@ -59,8 +59,8 @@ export const content = {
     eyebrow: "Atendimento Garimpo N\u00e1utico",
     title: "Pe\u00e7a certa com orienta\u00e7\u00e3o de quem entende do garimpo.",
     text: "Use este canal para consultar uma pe\u00e7a do cat\u00e1logo, pedir ajuda para encontrar um item espec\u00edfico ou oferecer uma pe\u00e7a usada para avalia\u00e7\u00e3o da nossa equipe.",
-    privacy: "Ao continuar, voc\u00ea autoriza o Garimpo N\u00e1utico a usar seus dados apenas para contato sobre pe\u00e7as n\u00e1uticas. Nesta demonstra\u00e7\u00e3o, nenhum dado \u00e9 enviado ou armazenado.",
-    success: "Solicita\u00e7\u00e3o validada na demonstra\u00e7\u00e3o. Nenhum dado foi enviado ou armazenado.",
+    privacy: "Ao continuar, voc\u00ea autoriza o Garimpo N\u00e1utico a usar seus dados para contato sobre pe\u00e7as n\u00e1uticas. Dados de navega\u00e7\u00e3o e marketing seguem sua escolha de cookies.",
+    success: "Solicita\u00e7\u00e3o registrada. A equipe usa o contato informado para retornar sobre pe\u00e7as n\u00e1uticas.",
     trustTitle: "Atendimento em tr\u00eas passos",
     trustItems: [
       "Voc\u00ea informa a pe\u00e7a, o motor, a cidade e o n\u00edvel de urg\u00eancia.",

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#124452" />
+    <title>Marketing Lab | Garimpo Náutico</title>
+    <link rel="stylesheet" href="/marketing-lab/styles.css" />
+  </head>
+  <body>
+    <main class="lab-shell">
+      <section class="lab-hero">
+        <p class="lab-kicker">Marketing Lab</p>
+        <h1>Teste mensagens, ofertas e chamadas antes de levar para o site.</h1>
+        <p>
+          Use esta área local para comparar abordagens de venda, montar campanhas
+          e guardar ideias que ainda não devem aparecer em produção.
+        </p>
+      </section>
+
+      <section class="lab-grid" aria-label="Experimentos de marketing">
+        <article class="lab-panel">
+          <p class="lab-kicker">Experimento 01</p>
+          <h2>Promessa principal</h2>
+          <div class="variant-list" data-variant-list="promise"></div>
+          <button class="lab-button" type="button" data-randomize="promise">
+            Sortear variação
+          </button>
+        </article>
+
+        <article class="lab-panel">
+          <p class="lab-kicker">Experimento 02</p>
+          <h2>Oferta do carrinho</h2>
+          <div class="variant-list" data-variant-list="offer"></div>
+          <button class="lab-button" type="button" data-randomize="offer">
+            Sortear variação
+          </button>
+        </article>
+
+        <article class="lab-panel">
+          <p class="lab-kicker">Experimento 03</p>
+          <h2>Gerador de UTM</h2>
+          <form class="utm-form" data-utm-form>
+            <label>
+              <span>Origem</span>
+              <input name="source" placeholder="instagram" value="instagram" />
+            </label>
+            <label>
+              <span>Campanha</span>
+              <input name="campaign" placeholder="pecas-usadas" value="pecas-usadas" />
+            </label>
+            <label>
+              <span>Conteúdo</span>
+              <input name="content" placeholder="story-carrinho" value="story-carrinho" />
+            </label>
+            <button class="lab-button" type="submit">Gerar link</button>
+          </form>
+          <output class="utm-output" data-utm-output></output>
+        </article>
+
+        <article class="lab-panel lab-panel--wide">
+          <p class="lab-kicker">Experimento 04</p>
+          <h2>Saudação para cliente reconhecido</h2>
+          <p class="lab-note">
+            Simula qualquer cadastro: compra, atendimento, captura de peça ou contato.
+            Quando existir nome e contato no navegador, a próxima visita pode começar chamando pelo primeiro nome.
+          </p>
+          <form class="identity-form" data-identity-form>
+            <label>
+              <span>Nome</span>
+              <input name="name" placeholder="Ex.: Calebe Souza" required />
+            </label>
+            <label>
+              <span>Contato</span>
+              <input name="contact" placeholder="WhatsApp ou e-mail" required />
+            </label>
+            <button class="lab-button" type="submit">Salvar cliente de teste</button>
+            <button class="lab-button lab-button-secondary" type="button" data-clear-identity>
+              Limpar reconhecimento
+            </button>
+          </form>
+          <div class="greeting-preview" data-greeting-preview>
+            <p class="lab-kicker">Prévia</p>
+            <strong>Olá! Encontre a peça certa para o seu barco.</strong>
+            <span>Sem cliente reconhecido neste navegador.</span>
+          </div>
+        </article>
+
+        <article class="lab-panel lab-panel--wide">
+          <p class="lab-kicker">Backlog</p>
+          <h2>Ideias para testar aos poucos</h2>
+          <ul class="idea-list">
+            <li>Faixa de urgência para peças únicas: “1 unidade disponível”.</li>
+            <li>CTA alternativo: “Reservar para conferência”.</li>
+            <li>Prova de confiança antes do carrinho: revisão, compatibilidade e envio.</li>
+            <li>Campanha para oficinas náuticas com peças de alto valor.</li>
+            <li>Mensagem de WhatsApp diferente para retirada e envio.</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+    <script src="/marketing-lab/experiments.js" defer></script>
+  </body>
+</html>

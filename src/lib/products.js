@@ -228,6 +228,31 @@ export const products = [
   },
 ];
 
+const inventory = {
+  "mercury-150-rabeta": { stock: 1, status: "Pronta entrega", shipping: "Retirada ou frete por transportadora" },
+  "yamaha-15hp-capota": { stock: 2, status: "Disponível", shipping: "Envio leve nacional" },
+  "helice-inox-21": { stock: 1, status: "Disponível após conferência", shipping: "Envio com seguro" },
+  "painel-chave-bombordo": { stock: 4, status: "Pronta entrega", shipping: "Envio nacional" },
+  "caixa-direcao-cabo": { stock: 1, status: "Reservável", shipping: "Retirada ou frete por volume" },
+  "guincho-carreta": { stock: 1, status: "Retirada recomendada", shipping: "Retirada combinada" },
+  "volvo-penta-d3-rabeta": { stock: 1, status: "Sob conferência técnica", shipping: "Frete por conta do comprador" },
+  "modulo-seadoo-215": { stock: 1, status: "Testado e disponível", shipping: "Envio com embalagem reforçada" },
+  "plotter-garmin-7": { stock: 1, status: "Disponível", shipping: "Envio leve com seguro" },
+  "bomba-porao-2000": { stock: 3, status: "Pronta entrega", shipping: "Envio nacional" },
+};
+
+export function getInventory(product) {
+  return inventory[product.id] || {
+    stock: 1,
+    status: "Disponível para consulta",
+    shipping: product.logistics,
+  };
+}
+
+export function findProduct(id) {
+  return products.find((product) => product.id === id);
+}
+
 export function formatPrice(value) {
   return new Intl.NumberFormat("pt-BR", {
     currency: "BRL",
