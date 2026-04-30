@@ -31,7 +31,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp -R index.html manifest.webmanifest service-worker.js src captacao loja produtos _site/
+          cp -R index.html manifest.webmanifest service-worker.js src captacao loja produtos downloads _site/
           cp index.html _site/404.html
           touch _site/.nojekyll
           if [ -f CNAME ]; then cp CNAME _site/CNAME; fi

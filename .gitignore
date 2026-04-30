@@ -9,7 +9,6 @@ coverage/
 .DS_Store
 Thumbs.db
 
-.vercel
 mobile-*.png
 shop-*.png
 cart-*.png

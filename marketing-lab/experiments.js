@@ -46,7 +46,7 @@ function setupUtmForm() {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(form);
-    const url = new URL("https://garimpo-nautico.vercel.app/");
+    const url = new URL("https://garimponauticobrasil-lgtm.github.io/garimpo-nautico/");
 
     url.searchParams.set("utm_source", data.get("source"));
     url.searchParams.set("utm_medium", "social");
