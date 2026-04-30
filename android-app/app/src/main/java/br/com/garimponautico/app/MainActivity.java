@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-    private static final String HOME_URL = "http://garimponautico.tech/";
+    private static final String HOME_URL = "https://garimponautico.tech/";
     private static final String WHATSAPP_URL = "https://wa.me/5524992527966";
     private static final String DOMAIN = "garimponautico.tech";
 
@@ -194,7 +194,7 @@ public class MainActivity extends Activity {
         settings.setUseWideViewPort(true);
         settings.setBuiltInZoomControls(false);
         settings.setDisplayZoomControls(false);
-        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         settings.setUserAgentString(settings.getUserAgentString() + " GarimpoNauticoApp/1.0");
 
         webView.setWebChromeClient(new WebChromeClient() {

@@ -6,11 +6,44 @@ android {
     namespace "br.com.garimponautico.app"
     compileSdk 35
 
+    def signingProperties = new Properties()
+    def localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.withInputStream { signingProperties.load(it) }
+    }
+
     defaultConfig {
         applicationId "br.com.garimponautico.app"
         minSdk 23
         targetSdk 35
         versionCode 1
         versionName "1.0.0"
+    }
+
+    packaging {
+        resources {
+            excludes += [
+                "META-INF/com/android/build/gradle/app-metadata.properties",
+                "META-INF/version-control-info.textproto"
+            ]
+        }
+    }
+
+    signingConfigs {
+        release {
+            def storeFilePath = signingProperties.getProperty("release.storeFile")
+            if (storeFilePath) {
+                storeFile rootProject.file(storeFilePath)
+                storePassword signingProperties.getProperty("release.storePassword")
+                keyAlias signingProperties.getProperty("release.keyAlias")
+                keyPassword signingProperties.getProperty("release.keyPassword")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
     }
 }

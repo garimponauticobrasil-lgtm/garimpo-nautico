@@ -7,6 +7,7 @@
 server.mjs
 package.json
 scripts/
+android-app/
 dist/
 mobile-*.png
 shop-*.png

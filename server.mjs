@@ -21,6 +21,7 @@ const types = {
   ".jpeg": "image/jpeg",
   ".js": "text/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".apk": "application/vnd.android.package-archive",
   ".png": "image/png",
   ".svg": "image/svg+xml",
   ".webmanifest": "application/manifest+json; charset=utf-8",
@@ -135,6 +136,7 @@ function isPublicPath(filePath) {
 
   return ["/index.html", "/manifest.webmanifest", "/service-worker.js"].includes(relativePath)
     || relativePath.startsWith("/src/")
+    || relativePath.startsWith("/downloads/")
     || relativePath.startsWith("/marketing-lab/");
 }
 

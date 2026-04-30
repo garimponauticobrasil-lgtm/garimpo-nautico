@@ -80,7 +80,7 @@ function isInternalPath(href) {
   return href.startsWith("/");
 }
 
-export function createHeader({ brand, logo, links, account }, currentPath) {
+export function createHeader({ brand, logo, links, appDownload, account }, currentPath) {
   return el("header", { className: "site-header" }, [
     el("a", {
       className: "brand",
@@ -99,6 +99,18 @@ export function createHeader({ brand, logo, links, account }, currentPath) {
         { className: "site-nav", "aria-label": "Navegação principal" },
         links.map((link) => createNavLink(link, currentPath)),
       ),
+      appDownload ? el("a", {
+        className: "app-download-link",
+        href: appDownload.href,
+        download: appDownload.filename,
+        onClick: () => {
+          trackEvent("app_download_click", { location: "header" });
+          recordIntentEvent("app_download_click", { location: "header" });
+          markConverted("app_download");
+        },
+      }, [
+        el("span", { text: appDownload.label }),
+      ]) : null,
       el("a", {
         className: "account-link",
         href: account.href,

@@ -196,8 +196,15 @@ function createAction(action) {
   return el("a", {
     className: action.secondary ? "button button-secondary hero-cta-secondary" : "button hero-cta-primary",
     href: action.href,
+    download: action.download,
     text: action.label,
     onClick: (event) => {
+      if (action.direct) {
+        trackEvent("app_download_click", { location: "hero" });
+        recordIntentEvent("app_download_click", { location: "hero" });
+        return;
+      }
+
       event.preventDefault();
       navigate(action.href);
     },

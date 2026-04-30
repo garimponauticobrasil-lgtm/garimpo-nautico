@@ -2,18 +2,22 @@
 
 Aplicativo Android nativo que carrega o site oficial do Garimpo Nautico em WebView.
 
-## APK de teste
+## APK publicado
 
-O APK debug gerado fica em:
+O APK release assinado para publicar no site fica em:
 
-`app/build/outputs/apk/debug/app-debug.apk`
+`app/build/outputs/apk/release/app-release.apk`
+
+A copia hospedada pelo site fica em:
+
+`../downloads/nosso-app.apk`
 
 ## Build local
 
 Use Gradle com Android SDK instalado:
 
 ```powershell
-gradle assembleDebug
+gradle assembleRelease
 ```
 
-O app usa `http://garimponautico.tech/` enquanto o certificado HTTPS do GitHub Pages ainda esta em emissao.
+As credenciais de assinatura ficam apenas em `local.properties`, que e ignorado pelo Git.

@@ -205,6 +205,20 @@
   text-decoration: none;
 }
 
+.app-download-link {
+  align-items: center;
+  background: var(--sea-deep);
+  border: 1px solid var(--sea);
+  border-radius: 8px;
+  color: #ffffff;
+  display: inline-flex;
+  font-weight: 900;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 14px;
+  text-decoration: none;
+}
+
 .whatsapp-icon {
   color: #1f7f42;
   flex: 0 0 auto;
@@ -461,6 +475,7 @@
     gap: 8px 10px;
     grid-template-areas:
       "brand nav"
+      "app app"
       "cta cta";
     grid-template-columns: 46px minmax(0, 1fr);
     min-height: 0;
@@ -502,6 +517,15 @@
     text-align: center;
     white-space: nowrap;
     width: min(100%, 220px);
+  }
+
+  .app-download-link {
+    font-size: 0.84rem;
+    grid-area: app;
+    justify-self: center;
+    min-height: 42px;
+    padding: 9px 12px;
+    width: min(100%, 156px);
   }
 
   .products-grid {

@@ -7,6 +7,11 @@ export const content = {
       { label: "Carrinho", href: "/loja", icon: "cart" },
       { label: "Atendimento", href: "/captacao" },
     ],
+    appDownload: {
+      label: "Nosso app",
+      href: "/downloads/nosso-app.apk",
+      filename: "nosso-app-garimpo-nautico.apk",
+    },
     account: {
       label: "Falar com a equipe",
       href: "https://wa.me/5524992527966",
@@ -28,6 +33,13 @@ export const content = {
     empty: "N\u00e3o apareceu nada com esses filtros. Envie uma solicita\u00e7\u00e3o e a equipe procura o melhor caminho para voc\u00ea.",
     actions: [
       { label: "Consultar cat\u00e1logo", href: "/" },
+      {
+        label: "Nosso app",
+        href: "/downloads/nosso-app.apk",
+        download: "nosso-app-garimpo-nautico.apk",
+        secondary: true,
+        direct: true,
+      },
       { label: "Oferecer uma pe\u00e7a", href: "/captacao", secondary: true },
     ],
     proofPoints: [
