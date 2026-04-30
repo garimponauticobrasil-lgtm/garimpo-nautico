@@ -53,11 +53,20 @@ function createIntro() {
     const x = Math.cos(angle) * distance;
     const y = Math.sin(angle) * distance;
     const rotate = wave * 520;
+    const piece = document.createElement("span");
+    const image = document.createElement("img");
 
-    return `<span class="brand-intro__piece" style="--clip: inset(${top}% ${right}% ${bottom}% ${left}%); --x: ${x.toFixed(1)}px; --y: ${y.toFixed(1)}px; --r: ${rotate.toFixed(1)}deg;">
-      <img src="${content.header.logo}" alt="" />
-    </span>`;
-  }).join("");
+    piece.className = "brand-intro__piece";
+    piece.style.setProperty("--clip", `inset(${top}% ${right}% ${bottom}% ${left}%)`);
+    piece.style.setProperty("--x", `${x.toFixed(1)}px`);
+    piece.style.setProperty("--y", `${y.toFixed(1)}px`);
+    piece.style.setProperty("--r", `${rotate.toFixed(1)}deg`);
+    image.src = content.header.logo;
+    image.alt = "";
+    piece.append(image);
+
+    return piece;
+  });
   const dust = Array.from({ length: dustCount }, (_, index) => {
     const spiral = index * 2.399963;
     const ring = Math.sqrt(index / dustCount);
@@ -67,20 +76,28 @@ function createIntro() {
     const y = Math.sin(spiral + wave) * distance;
     const size = 1 + (index % 5) * 0.55;
     const hue = index % 3;
+    const particle = document.createElement("i");
 
-    return `<i class="brand-intro__dust brand-intro__dust--${hue}" style="--x: ${x.toFixed(1)}px; --y: ${y.toFixed(1)}px; --s: ${size.toFixed(2)}px;"></i>`;
-  }).join("");
+    particle.className = `brand-intro__dust brand-intro__dust--${hue}`;
+    particle.style.setProperty("--x", `${x.toFixed(1)}px`);
+    particle.style.setProperty("--y", `${y.toFixed(1)}px`);
+    particle.style.setProperty("--s", `${size.toFixed(2)}px`);
+
+    return particle;
+  });
 
   const intro = document.createElement("div");
+  const logo = document.createElement("div");
+  const whole = document.createElement("img");
+
   intro.className = "brand-intro";
   intro.setAttribute("aria-hidden", "true");
-  intro.innerHTML = `
-    <div class="brand-intro__logo">
-      <img class="brand-intro__whole" src="${content.header.logo}" alt="" />
-      ${pieces}
-      ${dust}
-    </div>
-  `;
+  logo.className = "brand-intro__logo";
+  whole.className = "brand-intro__whole";
+  whole.src = content.header.logo;
+  whole.alt = "";
+  logo.append(whole, ...pieces, ...dust);
+  intro.append(logo);
   window.setTimeout(() => intro.remove(), 3400);
 
   return intro;
