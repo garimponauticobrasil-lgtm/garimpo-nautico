@@ -137,12 +137,19 @@
   justify-content: flex-end;
 }
 
-.site-nav a {
+.site-nav a,
+.account-link,
+.app-download-link {
+  align-items: center;
+  background: transparent;
   border: 1px solid transparent;
   border-radius: 8px;
   color: var(--sea-deep);
+  display: inline-flex;
   font-size: 0.95rem;
   font-weight: 800;
+  justify-content: center;
+  min-height: 42px;
   padding: 10px 14px;
   text-decoration: none;
 }
@@ -192,35 +199,15 @@
 }
 
 .account-link {
-  align-items: center;
-  background: var(--signal);
-  border: 1px solid #d29a2d;
-  border-radius: 8px;
-  color: var(--ink);
-  display: inline-flex;
   gap: 8px;
-  font-weight: 900;
-  justify-content: center;
-  padding: 11px 15px;
-  text-decoration: none;
 }
 
 .app-download-link {
-  align-items: center;
-  background: var(--sea-deep);
-  border: 1px solid var(--sea);
-  border-radius: 8px;
-  color: #ffffff;
-  display: inline-flex;
-  font-weight: 900;
-  justify-content: center;
-  min-height: 44px;
-  padding: 10px 14px;
-  text-decoration: none;
+  gap: 8px;
 }
 
 .whatsapp-icon {
-  color: #1f7f42;
+  color: currentColor;
   flex: 0 0 auto;
   height: 18px;
   width: 18px;
@@ -513,7 +500,6 @@
     grid-area: cta;
     justify-self: center;
     min-height: 42px;
-    padding: 9px 12px;
     text-align: center;
     white-space: nowrap;
     width: min(100%, 220px);
@@ -524,7 +510,6 @@
     grid-area: app;
     justify-self: center;
     min-height: 42px;
-    padding: 9px 12px;
     width: min(100%, 156px);
   }
 

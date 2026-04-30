@@ -26,10 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-    private static final String HOME_URL = "https://garimpo-nautico.vercel.app/";
+    private static final String HOME_URL = "https://garimpo-nautico-delta.vercel.app/";
     private static final String WHATSAPP_URL = "https://wa.me/5524992527966";
     private static final String DOMAIN = "garimponautico.tech";
-    private static final String VERCEL_DOMAIN = "garimpo-nautico.vercel.app";
+    private static final String VERCEL_DOMAIN = "garimpo-nautico-delta.vercel.app";
 
     private WebView webView;
     private ProgressBar progressBar;
