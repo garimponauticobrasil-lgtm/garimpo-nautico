@@ -39,6 +39,13 @@ export const content = {
         download: "nosso-app-garimpo-nautico.apk",
         secondary: true,
         direct: true,
+        appMode: {
+          label: "Visitar site",
+          href: "https://garimponautico.tech/?abrir=site",
+          secondary: true,
+          direct: true,
+          mode: "site",
+        },
       },
       { label: "Oferecer uma pe\u00e7a", href: "/captacao", secondary: true },
     ],

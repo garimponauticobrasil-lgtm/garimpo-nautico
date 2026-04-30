@@ -80,7 +80,30 @@ function isInternalPath(href) {
   return href.startsWith("/");
 }
 
+function isNativeApp() {
+  return navigator.userAgent.includes("GarimpoNauticoApp");
+}
+
+function getAppLink(appDownload) {
+  if (!appDownload) {
+    return null;
+  }
+
+  if (!isNativeApp()) {
+    return appDownload;
+  }
+
+  return {
+    label: "Visitar site",
+    href: "https://garimponautico.tech/?abrir=site",
+    filename: undefined,
+    mode: "site",
+  };
+}
+
 export function createHeader({ brand, logo, links, appDownload, account }, currentPath) {
+  const appLink = getAppLink(appDownload);
+
   return el("header", { className: "site-header" }, [
     el("a", {
       className: "brand",
@@ -99,17 +122,18 @@ export function createHeader({ brand, logo, links, appDownload, account }, curre
         { className: "site-nav", "aria-label": "Navegação principal" },
         links.map((link) => createNavLink(link, currentPath)),
       ),
-      appDownload ? el("a", {
+      appLink ? el("a", {
         className: "app-download-link",
-        href: appDownload.href,
-        download: appDownload.filename,
+        href: appLink.href,
+        download: appLink.filename,
         onClick: () => {
-          trackEvent("app_download_click", { location: "header" });
-          recordIntentEvent("app_download_click", { location: "header" });
-          markConverted("app_download");
+          const eventName = appLink.mode === "site" ? "visit_site_click" : "app_download_click";
+          trackEvent(eventName, { location: "header" });
+          recordIntentEvent(eventName, { location: "header" });
+          markConverted(appLink.mode === "site" ? "site_visit" : "app_download");
         },
       }, [
-        el("span", { text: appDownload.label }),
+        el("span", { text: appLink.label }),
       ]) : null,
       el("a", {
         className: "account-link",

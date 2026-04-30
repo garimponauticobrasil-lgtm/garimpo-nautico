@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
     private ProgressBar progressBar;
     private LinearLayout errorPanel;
     private Button backButton;
+    private Button siteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class MainActivity extends Activity {
 
         backButton = toolbarButton("Voltar", false);
         Button reloadButton = toolbarButton("Atualizar", false);
+        siteButton = toolbarButton("Site", false);
         Button whatsappButton = toolbarButton("WhatsApp", true);
         TextView title = new TextView(this);
         title.setText("Garimpo Nautico");
@@ -69,9 +71,10 @@ public class MainActivity extends Activity {
         title.setGravity(Gravity.CENTER_VERTICAL);
         title.setTypeface(null, android.graphics.Typeface.BOLD);
 
-        toolbar.addView(backButton, new LinearLayout.LayoutParams(dp(72), dp(44)));
+        toolbar.addView(backButton, new LinearLayout.LayoutParams(dp(64), dp(44)));
         toolbar.addView(title, new LinearLayout.LayoutParams(0, dp(44), 1));
-        toolbar.addView(reloadButton, new LinearLayout.LayoutParams(dp(90), dp(44)));
+        toolbar.addView(reloadButton, new LinearLayout.LayoutParams(dp(78), dp(44)));
+        toolbar.addView(siteButton, new LinearLayout.LayoutParams(dp(54), dp(44)));
         toolbar.addView(whatsappButton, new LinearLayout.LayoutParams(dp(94), dp(44)));
 
         progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
@@ -95,6 +98,7 @@ public class MainActivity extends Activity {
 
         backButton.setOnClickListener(view -> goBack());
         reloadButton.setOnClickListener(view -> reload());
+        siteButton.setOnClickListener(view -> openExternal(HOME_URL));
         whatsappButton.setOnClickListener(view -> openExternal(WHATSAPP_URL));
 
         root.addView(toolbar, new LinearLayout.LayoutParams(
@@ -211,6 +215,11 @@ public class MainActivity extends Activity {
                 Uri uri = request.getUrl();
                 String scheme = uri.getScheme() == null ? "" : uri.getScheme();
                 String host = uri.getHost() == null ? "" : uri.getHost();
+
+                if (host.equals(DOMAIN) && "site".equals(uri.getQueryParameter("abrir"))) {
+                    openExternal(HOME_URL);
+                    return true;
+                }
 
                 if (host.equals(DOMAIN) || host.equals("www." + DOMAIN)) {
                     return false;

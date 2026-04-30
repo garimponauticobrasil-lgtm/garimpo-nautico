@@ -193,20 +193,24 @@ function createProductCard(product) {
 }
 
 function createAction(action) {
+  const isNativeApp = navigator.userAgent.includes("GarimpoNauticoApp");
+  const resolvedAction = action.appMode && isNativeApp ? action.appMode : action;
+
   return el("a", {
-    className: action.secondary ? "button button-secondary hero-cta-secondary" : "button hero-cta-primary",
-    href: action.href,
-    download: action.download,
-    text: action.label,
+    className: resolvedAction.secondary ? "button button-secondary hero-cta-secondary" : "button hero-cta-primary",
+    href: resolvedAction.href,
+    download: resolvedAction.download,
+    text: resolvedAction.label,
     onClick: (event) => {
-      if (action.direct) {
-        trackEvent("app_download_click", { location: "hero" });
-        recordIntentEvent("app_download_click", { location: "hero" });
+      if (resolvedAction.direct) {
+        const eventName = resolvedAction.mode === "site" ? "visit_site_click" : "app_download_click";
+        trackEvent(eventName, { location: "hero" });
+        recordIntentEvent(eventName, { location: "hero" });
         return;
       }
 
       event.preventDefault();
-      navigate(action.href);
+      navigate(resolvedAction.href);
     },
   });
 }
