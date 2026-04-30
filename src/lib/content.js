@@ -9,7 +9,7 @@ export const content = {
     ],
     appDownload: {
       label: "Nosso app",
-      href: "/downloads/nosso-app.apk",
+      href: "https://garimpo-nautico-delta.vercel.app/downloads/nosso-app.apk",
       filename: "nosso-app-garimpo-nautico.apk",
     },
     account: {
@@ -35,7 +35,7 @@ export const content = {
       { label: "Consultar cat\u00e1logo", href: "/" },
       {
         label: "Nosso app",
-        href: "/downloads/nosso-app.apk",
+        href: "https://garimpo-nautico-delta.vercel.app/downloads/nosso-app.apk",
         download: "nosso-app-garimpo-nautico.apk",
         secondary: true,
         direct: true,
