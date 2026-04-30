@@ -26,9 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-    private static final String HOME_URL = "https://garimponautico.tech/";
+    private static final String HOME_URL = "https://garimpo-nautico.vercel.app/";
     private static final String WHATSAPP_URL = "https://wa.me/5524992527966";
     private static final String DOMAIN = "garimponautico.tech";
+    private static final String VERCEL_DOMAIN = "garimpo-nautico.vercel.app";
 
     private WebView webView;
     private ProgressBar progressBar;
@@ -212,7 +213,7 @@ public class MainActivity extends Activity {
                 String scheme = uri.getScheme() == null ? "" : uri.getScheme();
                 String host = uri.getHost() == null ? "" : uri.getHost();
 
-                if (host.equals(DOMAIN) || host.equals("www." + DOMAIN) || host.endsWith("github.io")) {
+                if (host.equals(DOMAIN) || host.equals("www." + DOMAIN) || host.equals(VERCEL_DOMAIN) || host.endsWith("github.io")) {
                     return false;
                 }
 
