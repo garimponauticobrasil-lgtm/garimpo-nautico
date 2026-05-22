@@ -18,15 +18,15 @@ p {
 }
 
 h1 {
-  font-size: clamp(2.9rem, 8vw, 6.9rem);
+  font-size: clamp(3.1rem, 6.2vw, 5.8rem);
   letter-spacing: 0;
-  line-height: 0.95;
+  line-height: 1;
   margin-bottom: 22px;
-  max-width: 12ch;
+  max-width: 18ch;
 }
 
 .page-intro h1 {
-  max-width: 13ch;
+  max-width: 17ch;
 }
 
 h2 {
@@ -38,8 +38,8 @@ h2 {
 
 .hero-text {
   color: var(--muted);
-  font-size: clamp(1.04rem, 2vw, 1.22rem);
-  max-width: 720px;
+  font-size: clamp(1.08rem, 1.6vw, 1.28rem);
+  max-width: 780px;
 }
 
 .page-intro .hero-text {
@@ -60,8 +60,9 @@ h2 {
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 8px;
   color: #ffffff;
+  font-size: 0.98rem;
   font-weight: 800;
-  padding: 10px 12px;
+  padding: 11px 13px;
 }
 
 .hero-actions {
@@ -163,10 +164,10 @@ h2 {
   display: grid;
   gap: 16px;
   grid-template-columns: minmax(240px, 1fr) minmax(160px, 0.28fr) minmax(170px, 0.32fr) minmax(150px, 0.25fr) auto;
-  margin: 28px auto;
+  margin: 30px auto 34px;
   max-width: 1280px;
-  padding-bottom: 22px;
-  padding-top: 22px;
+  padding-bottom: 24px;
+  padding-top: 24px;
   width: calc(100% - clamp(36px, 10vw, 144px));
 }
 
@@ -263,7 +264,7 @@ textarea:focus {
   border: 1px solid color-mix(in srgb, var(--line) 88%, var(--sea));
   border-radius: 8px;
   display: grid;
-  grid-template-rows: 188px 1fr;
+  grid-template-rows: 210px 1fr;
   min-width: 0;
   overflow: hidden;
 }
@@ -281,7 +282,7 @@ textarea:focus {
   display: flex;
   border: 0;
   cursor: zoom-in;
-  min-height: 188px;
+  min-height: 210px;
   overflow: hidden;
   padding: 16px;
   position: relative;
@@ -357,13 +358,14 @@ textarea:focus {
 }
 
 .product-card h2 {
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   line-height: 1.12;
   margin: 0;
 }
 
 .product-description {
   color: var(--muted);
+  font-size: 1rem;
   margin: 0;
 }
 
@@ -394,7 +396,7 @@ textarea:focus {
 }
 
 .product-footer strong {
-  font-size: 1.25rem;
+  font-size: 1.38rem;
 }
 
 .product-actions {

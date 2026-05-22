@@ -47,9 +47,10 @@ const securityHeaders = {
 
 function resolvePath(url) {
   const pathname = decodeURIComponent(new URL(url, `http://${host}`).pathname);
-  const requested = pathname === "/marketing-lab"
+  const routePath = pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+  const requested = routePath === "/marketing-lab"
     ? "/marketing-lab/index.html"
-    : ["/", "/produtos", "/captacao", "/loja", "/privacidade"].includes(pathname) || pathname.startsWith("/produto/")
+    : ["/", "/produtos", "/captacao", "/loja", "/privacidade"].includes(routePath) || routePath.startsWith("/produto/")
     ? "/index.html"
     : pathname;
   const filePath = normalize(join(root, requested));

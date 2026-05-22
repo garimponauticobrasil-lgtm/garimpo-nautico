@@ -19,7 +19,7 @@ function createPage(route) {
   }
 
   if (route === "/captacao") {
-    return createLeadPage(content.leadPage);
+    return createLeadPage(content.leadPage, content.header.account.href);
   }
 
   if (route === "/loja") {

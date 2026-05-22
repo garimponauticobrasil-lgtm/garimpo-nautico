@@ -34,6 +34,27 @@ function validatePhone(value) {
   return value.replace(/\D/g, "").length >= 10;
 }
 
+function getWhatsAppNumber(href) {
+  return href.replace(/\D/g, "") || "5524992527966";
+}
+
+function buildLeadMessage(data) {
+  return [
+    "Ola, equipe Garimpo Nautico. Quero atendimento:",
+    "",
+    `Objetivo: ${data.objetivo}`,
+    `Nome: ${data.nome}`,
+    `WhatsApp: ${data.whatsapp}`,
+    `Cidade: ${data.local}`,
+    `Tipo de peca: ${data.peca}`,
+    `Marca/modelo/HP: ${data.modelo}`,
+    `Codigo/OEM: ${data.codigo || "Nao informado"}`,
+    `Embarcacao ou motor: ${data.embarcacao || "Nao informado"}`,
+    `Urgencia: ${data.urgencia}`,
+    `Detalhes: ${data.detalhes || "Sem detalhes adicionais"}`,
+  ].join("\n");
+}
+
 export function createLeadPage({
   eyebrow,
   title,
@@ -44,7 +65,8 @@ export function createLeadPage({
   trustItems,
   formTitle,
   formHint,
-}) {
+}, contactHref = "") {
+  const number = getWhatsAppNumber(contactHref);
   const status = el("p", { className: "form-status", role: "status", "aria-live": "polite" });
   const form = el("form", {
     className: "lead-form",
@@ -77,8 +99,9 @@ export function createLeadPage({
       });
       markConverted("lead");
       event.currentTarget.reset();
-      status.textContent = success;
+      status.textContent = `${success} Abrindo conversa no WhatsApp.`;
       status.setAttribute("data-state", "success");
+      window.location.href = `https://wa.me/${number}?text=${encodeURIComponent(buildLeadMessage(data))}`;
     },
   }, [
     el("div", { className: "form-heading" }, [

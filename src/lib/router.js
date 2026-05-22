@@ -1,15 +1,25 @@
 const routes = new Set(["/", "/produtos", "/captacao", "/loja", "/privacidade"]);
 
+function normalizePath(pathname) {
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    return pathname.slice(0, -1);
+  }
+
+  return pathname;
+}
+
 export function getRoute() {
-  if (window.location.pathname === "/") {
+  const pathname = normalizePath(window.location.pathname);
+
+  if (pathname === "/") {
     return "/";
   }
 
-  if (window.location.pathname.startsWith("/produto/")) {
-    return window.location.pathname;
+  if (pathname.startsWith("/produto/")) {
+    return pathname;
   }
 
-  return routes.has(window.location.pathname) ? window.location.pathname : "/";
+  return routes.has(pathname) ? pathname : "/";
 }
 
 export function navigate(path) {
