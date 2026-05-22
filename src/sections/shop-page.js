@@ -34,6 +34,7 @@ function buildWhatsAppMessage(items, formData) {
     `Entrega: ${formData.get("entrega")}`,
     `Endereço/retirada: ${formData.get("endereco") || "A combinar"}`,
     `Pagamento: ${formData.get("pagamento")}`,
+    "Observação de pagamento: enviar link seguro Stone após confirmação de estoque e frete.",
     `Observação: ${formData.get("observacao") || "Sem observação"}`,
   ].join("\n");
 }
@@ -174,9 +175,9 @@ export function createShopPage(copy, checkoutHref) {
     el("label", { className: "form-field" }, [
       el("span", { text: "Pagamento" }),
       el("select", { name: "pagamento", required: true }, [
-        el("option", { value: "A combinar com a equipe", text: "A combinar com a equipe" }),
-        el("option", { value: "Pix após confirmação", text: "Pix após confirmação" }),
-        el("option", { value: "Cartão/link após confirmação", text: "Cartão/link após confirmação" }),
+        el("option", { value: "Link seguro Stone após confirmação", text: "Link seguro Stone após confirmação" }),
+        el("option", { value: "Cartão via Stone", text: "Cartão via Stone" }),
+        el("option", { value: "Pix via Stone", text: "Pix via Stone" }),
       ]),
     ]),
     el("label", { className: "form-field" }, [
