@@ -13,7 +13,7 @@ function getCartItems(cart) {
 }
 
 function getWhatsAppNumber(href) {
-  return href.replace(/\D/g, "") || "5524992527966";
+  return href.replace(/\D/g, "") || "5524974026167";
 }
 
 function buildWhatsAppMessage(items, formData) {

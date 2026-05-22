@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private static final String HOME_URL = "https://garimponautico.tech/";
-    private static final String WHATSAPP_URL = "https://wa.me/5524992527966";
+    private static final String WHATSAPP_URL = "https://wa.me/5524974026167";
     private static final String DOMAIN = "garimponautico.tech";
 
     private WebView webView;

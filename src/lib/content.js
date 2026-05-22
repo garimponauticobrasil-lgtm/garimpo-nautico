@@ -14,7 +14,7 @@ export const content = {
     },
     account: {
       label: "Falar com a equipe",
-      href: "https://wa.me/5524992527966",
+      href: "https://wa.me/5524974026167",
     },
   },
   shopPage: {
