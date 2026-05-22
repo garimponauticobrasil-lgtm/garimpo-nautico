@@ -1,0 +1,6 @@
+/captacao /index.html 200
+/loja /index.html 200
+/produtos /index.html 200
+/privacidade /index.html 200
+/produto/* /index.html 200
+

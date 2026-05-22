@@ -41,6 +41,8 @@ jobs:
           cp index.html _site/404.html
           touch _site/.nojekyll
           if [ -f CNAME ]; then cp CNAME _site/CNAME; fi
+          if [ -f _headers ]; then cp _headers _site/_headers; fi
+          if [ -f _redirects ]; then cp _redirects _site/_redirects; fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
